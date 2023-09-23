@@ -12,7 +12,7 @@ public class server {
     private static List<PrintWriter> clientWriters = new ArrayList<>();
 
     public static void main(String[] args) {
-        System.out.println("El servidor del juego Connect Dots está en funcionamiento...");
+        System.out.println("El servidor del juego Connect Dots está en funcionamiento....");
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
                 // Espera a que un cliente se conecte
