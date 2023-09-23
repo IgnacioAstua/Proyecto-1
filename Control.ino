@@ -2,17 +2,18 @@
 #include <WiFiClient.h>
 
 
-
-const char *ssid = "Hola";
-const char *pass = "12345678";
-const char *host= "192.168.43.83";
+const char *ssid = "Hola"; //Red a la cual se va a conectar
+const char *pass = "12345678";//Contraseña de la red
+const char *host= "192.168.43.83";//Ip del servidor
 int port = 80;
 
 WiFiServer server(port);
 
 void setup() {
   
-  Serial.begin(115200);
+  Serial.begin(9600);
+
+//Comienza la conexión con la red
   Serial.println("");
   Serial.print("Conoectado a ");
   Serial.println(ssid);
@@ -29,19 +30,64 @@ void setup() {
 }
 
 void loop() {
-  int up = digitalRead(D8);
+  //Declara los botones como entradas. Si la entrada recibe HIGH, se envia un mensaje al servidor.
+  int OK = digitalRead(D8);
+  int UP = digitalRead(D1);
+  int DOWN = digitalRead(D5);
+  int LEFT = digitalRead(D6);
+  int RIGHT = digitalRead(D2); 
   WiFiClient client;
-  if(up == HIGH){
-    Serial.println("Ya");
+//Botón para seleccionar.
+  if(OK == HIGH){
+    Serial.println("OK");
     client.connect(host, 9090);
-    Serial.println("Conectado");
-    client.write("DDDD");
-    delay(100);
+    client.print("Ok");
+    delay(125);
     client.flush();
     client.stop();
-    Serial.println("Enviado");
     return;
   }
+//Botón para moverse hacia arriba.
+  if(UP == HIGH){
+    Serial.println("UP");
+    client.connect(host, 9090);
+    client.print("UP");
+    delay(125);
+    client.flush();
+    client.stop();
+    return;
+  }
+//Botón para moverse hacia abajo.
+  if(DOWN == HIGH){
+    Serial.println("DOWN");
+    client.connect(host, 9090);
+    client.print("DOWN");
+    delay(125);
+    client.flush();
+    client.stop();
+    return;
+  }
+//Botón para moverse hacia la izquierda.
+  if(LEFT == HIGH){
+    Serial.println("LEFT");
+    client.connect(host, 9090);
+    client.print("LEFT");
+    delay(125);
+    client.flush();
+    client.stop();
+    return;
+  }
+//Botón para moverse hacia la derecha.
+  if(RIGHT == HIGH){
+    Serial.println("RIGHT");
+    client.connect(host, 9090);
+    client.print("RIGHT");
+    delay(125);
+    client.flush();
+    client.stop();
+    return;
+  }
+
   delay(100);
 }
 
