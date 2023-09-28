@@ -176,9 +176,9 @@ public class Start extends JFrame implements ActionListener, ItemListener, Start
     }
 
     @Override
-    public void crear(String nombre, String ip, int puertoEntrada, int puertoSalida, String modoPartida) {
-        // Crea una instancia de la clase Vista y oculta la ventana actual
-        Vista vista = new Vista(nombre, ip, puertoEntrada, puertoSalida, modoPartida);
+    public void crear(String nombreField, String ipField, int puertoEntrada, int puertoSalida, String modoPartida) {
+        // Crea una instancia de la clase View y oculta la ventana actual
+        View view = new View(nombreField, ipField, puertoEntrada, puertoSalida, modoPartida);
         setVisible(false);
     }
 
