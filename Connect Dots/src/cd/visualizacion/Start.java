@@ -1,6 +1,6 @@
-package mx.uabc.poo2.pf.vista;
+package cd.visualizacion;
 
-import mx.uabc.poo2.pf.comunicacion.StartVista;
+import cd.conexion.StartView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 // Esta es la clase que inicia todo
-public class Start extends JFrame implements ActionListener, ItemListener, StartVista {
+public class Start extends JFrame implements ActionListener, ItemListener, StartView {
 
     private JTextField nombreField, ipField, puertoEntradaField, puertoSalidaField;
     private JLabel etiquetaNombre, etiquetaIP, etiquetaPuertoEntrada, etiquetaPuertoSalida;
@@ -24,7 +24,7 @@ public class Start extends JFrame implements ActionListener, ItemListener, Start
     private String modoPartida = "CrearPartida"; // Variable para determinar si se crea o se une a una partida
 
     public Start() {
-        super("Timbiriche");
+        super("Connect Dots");
         inicializarInterfaz();
     }
 
