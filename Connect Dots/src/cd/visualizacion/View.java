@@ -1,6 +1,6 @@
 package cd.visualizacion;
 
-//import cd.conexion.ViewMaquinaEstados;
+import cd.conexion.ViewMaquinaEstados;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,25 +19,41 @@ import cd.logica.Boton;
 import java.util.ArrayList;
 import java.util.List;
 
-/**public class View extends JFrame implements VistaMaquinaEstados, KeyListener, ActionListener {
+/**
+ * Esta clase representa la vista principal del juego "Connect Dots".
+ * Aquí se gestiona la interfaz gráfica del juego, incluyendo el tablero de juego,
+ * el historial de chat, los mensajes, los puntajes y los botones para enviar mensajes y rendirse.
+ */
+public class View extends JFrame implements VistaMaquinaEstados, KeyListener, ActionListener {
     
     private List<Boton> botones = new ArrayList<>(); // Lista de botones para el tablero de juego
-    private JPanel p1, p2;
+    private JPanel CrearPartida, UnirsePartida;
     private JButton send, help, surrender; // Botones para enviar mensajes, obtener ayuda y rendirse
     private JTextPane history, message; // Paneles de texto para el historial de chat y mensajes
     private JLabel player1, player2, puntaje1, puntaje2; // Etiquetas para los nombres de los jugadores y sus puntajes
     private JScrollPane sp1, sp2; // Barras de desplazamiento para los paneles de texto
     private MaquinaEstados machine; // Instancia de la clase Maquina que maneja la lógica del juego
     
+    /**
+     * Constructor de la clase View.
+     * Inicializa la vista del juego con los parámetros proporcionados.
+     *
+     * @param nombreField       El nombre del jugador.
+     * @param ipField           La dirección IP del servidor.
+     * @param puertoEntradaField El puerto de entrada para la comunicación.
+     * @param puertoSalidaField El puerto de salida para la comunicación.
+     * @param modoPartida       El modo de partida (Crear o Unirse).
+     */
     public View(String  nombreField, String ipField, int puertoEntradaField, int puertoSalidaField, String modoPartida){
         // Crear una instancia de la máquina y establecer la configuración inicial
         crearMaquina(nombreField, ipField, puertoEntradaField, puertoSalidaField, modoPartida);
         // Inicializar la interfaz gráfica
         inicializar();
     } 
-    
-**/
-    
+
+    /**
+     * Inicializa la interfaz gráfica del juego.
+     */
     public void inicializar(){
         setSize(805, 600); // Tamaño de la ventana
         setLocationRelativeTo(null); // Centrar la ventana en la pantalla
@@ -45,8 +61,8 @@ import java.util.List;
         setResizable(false); // Evitar que se redimensione
         setBackground(Color.WHITE); // Fondo blanco
         
-        p1 = new JPanel(); // Panel para el tablero de juego
-        p1.setLayout(null);
+        CrearPartida = new JPanel(); // Panel para el tablero de juego
+        CrearPartida.setLayout(null);
         // Acomodar los botones en el tablero de juego usando la instancia de la máquina
         machine.acomodar(botones, true);
         
@@ -94,13 +110,15 @@ import java.util.List;
         surrender.addActionListener(machine); // Asociar el botón con la acción de la máquina
         add(surrender);
         
-        add(p1); // Agregar el panel del tablero al JFrame
+        add(CrearPartida); // Agregar el panel del tablero al JFrame
         
         setVisible(true); // Hacer visible la ventana
     }
     
-    // Chequea si esta vacío el cuadro de texto para decidir si enviar o no mensajes
-    public void check(){
+    /**
+     * Verifica si el cuadro de texto de mensajes está vacío y habilita o deshabilita el botón de enviar en consecuencia.
+     */
+    public void avanzadoCheckBox(){
         if(message.getText().equalsIgnoreCase(""))
             send.setEnabled(false); // Si está vacía, deshabilitar el botón "Enviar"
         else
@@ -119,17 +137,17 @@ import java.util.List;
 
     @Override
     public void keyTyped(KeyEvent ke) {
-        check(); // Verificar si se debe habilitar el botón "Enviar"
+        avanzadoCheckBox(); // Verificar si se debe habilitar el botón "Enviar"
     }
 
     @Override
     public void keyPressed(KeyEvent ke) {
-        check(); // Verificar si se debe habilitar el botón "Enviar"
+        avanzadoCheckBox(); // Verificar si se debe habilitar el botón "Enviar"
     }
 
     @Override
     public void keyReleased(KeyEvent ke) {
-        check(); // Verificar si se debe habilitar el botón "Enviar"
+        avanzadoCheckBox(); // Verificar si se debe habilitar el botón "Enviar"
     }
 
     @Override
@@ -142,13 +160,13 @@ import java.util.List;
     public void actionPerformed(ActionEvent ae) {
         if(ae.getSource() == help){
             // Mostrar un cuadro de diálogo con información de ayuda
-            JOptionPane.showMessageDialog(null, null, null, WIDTH, new ImageIcon("src/reglas.png"));
+            JOptionPane.showMessageDialog(null, null, null, WIDTH, new ImageIcon("src/reglas.png"));//añadir imagen con las reglas
         }
     }
 
     @Override
     public void agregar(Boton boton) {
-        p1.add(boton); // Agregar un botón al panel del tablero
+        CrearPartida.add(boton); // Agregar un botón al panel del tablero
     }
 
     @Override
