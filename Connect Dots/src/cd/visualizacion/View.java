@@ -1,6 +1,6 @@
 package cd.visualizacion;
 
-import cd.conexion.ViewMaquinaEstados;
+import cd.conexion.InterfazMaquinaEstados;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,18 +15,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import cd.logica.Boton;
-//import cd.logica.MaquinaEstados;
-import java.util.ArrayList;
-import java.util.List;
+import cd.logica.MaquinaEstados;
+//import java.util.ArrayList;
+//import java.util.List;
 
 /**
  * Esta clase representa la vista principal del juego "Connect Dots".
  * Aquí se gestiona la interfaz gráfica del juego, incluyendo el tablero de juego,
  * el historial de chat, los mensajes, los puntajes y los botones para enviar mensajes y rendirse.
  */
-public class View extends JFrame implements VistaMaquinaEstados, KeyListener, ActionListener {
+public class View extends JFrame implements InterfazMaquinaEstados, KeyListener, ActionListener {
     
-    private List<Boton> botones = new ArrayList<>(); // Lista de botones para el tablero de juego
+    private Boton[][] matriz=new Boton[19][19];
     private JPanel CrearPartida, UnirsePartida;
     private JButton send, help, surrender; // Botones para enviar mensajes, obtener ayuda y rendirse
     private JTextPane history, message; // Paneles de texto para el historial de chat y mensajes
@@ -64,7 +64,7 @@ public class View extends JFrame implements VistaMaquinaEstados, KeyListener, Ac
         CrearPartida = new JPanel(); // Panel para el tablero de juego
         CrearPartida.setLayout(null);
         // Acomodar los botones en el tablero de juego usando la instancia de la máquina
-        machine.acomodar(botones, true);
+        machine.acomodar(matriz, true);
         
         history = new JTextPane(); // Panel de texto para el historial de chat
         sp1 = new JScrollPane(history); // Barra de desplazamiento para el historial de chat
@@ -132,7 +132,7 @@ public class View extends JFrame implements VistaMaquinaEstados, KeyListener, Ac
 
     @Override
     public void crearMaquina(String  nombreField, String ipField, int puertoEntradaField, int puertoSalidaField, String modoPartida) {
-        machine = new Maquina(this,  nombreField, ipField, puertoEntradaField, puertoSalidaField, modoPartida); // Crear una instancia de la máquina
+        machine = new MaquinaEstados(this,  nombreField, ipField, puertoEntradaField, puertoSalidaField, modoPartida); // Crear una instancia de la máquina
     }
 
     @Override
@@ -166,21 +166,17 @@ public class View extends JFrame implements VistaMaquinaEstados, KeyListener, Ac
 
     @Override
     public void agregar(Boton boton) {
-        CrearPartida.add(boton); // Agregar un botón al panel del tablero
+        CrearPartida.add(boton);
     }
 
     @Override
     public Boton getBoton(int x, int y) {
-        // Obtener el botón en una posición específica (implementar la lógica para buscar en la lista)
-        // Si los botones se almacenan en una lista en orden de fila por fila, podría ser algo como:
-        // int indice = x * NUMERO_DE_COLUMNAS + y;
-        // return botones.get(indice);
-        return null; // Reemplazar esto con la lógica adecuada
+        return matriz[x][y];
     }
 
     @Override
-    public List<Boton> getBotones() {
-        return botones; // Obtener la lista de botones del tablero
+    public Boton[][] getMatriz() {
+        return matriz;
     }
 
     @Override
