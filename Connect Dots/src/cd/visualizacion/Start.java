@@ -13,7 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-// Esta es la clase que inicia todo
+/**
+ * Esta clase representa la ventana de inicio del juego "Connect Dots".
+ * Los jugadores pueden ingresar su nombre, dirección IP y configurar los puertos de comunicación.
+ * También pueden elegir si desean crear una partida o unirse a una existente.
+ */
 public class Start extends JFrame implements ActionListener, ItemListener, StartView {
 
     private JTextField nombreField, ipField, puertoEntradaField, puertoSalidaField;
@@ -23,12 +27,17 @@ public class Start extends JFrame implements ActionListener, ItemListener, Start
     private JCheckBox avanzadoCheckBox;
     private String modoPartida = "CrearPartida"; // Variable para determinar si se crea o se une a una partida
 
+    /**
+     * Constructor de la clase Start.
+     * Inicializa la interfaz de usuario.
+     */
     public Start() {
         super("Connect Dots");
         inicializarInterfaz();
     }
 
     private void inicializarInterfaz() {
+        // Configuración de la ventana
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(300, 300);
         setLocationRelativeTo(null);
@@ -104,6 +113,9 @@ public class Start extends JFrame implements ActionListener, ItemListener, Start
         setVisible(true);
     }
 
+    /**
+     * Método principal que inicia la aplicación.
+     */
     public static void main(String[] args) {
         Start start = new Start();
     }
@@ -161,12 +173,12 @@ public class Start extends JFrame implements ActionListener, ItemListener, Start
                 crear(nombreField.getText(), ipField.getText(), Integer.parseInt(puertoEntradaField.getText()),
                         Integer.parseInt(puertoSalidaField.getText()), modoPartida);
             } catch (ArithmeticException e) {
-                JOptionPane.showMessageDialog(null, "Los puertos no pueden ser iguales. \nPor favor cambia uno de los dos");
+                JOptionPane.showMessageDialog(null, "No puede ser el mismo puerto para ambos jugadores. \nPor favor cambia uno de los dos");
             } catch (ClassNotFoundException e) {
-                JOptionPane.showMessageDialog(null, "Procura no dejar espacios vacíos. \nToda la información es importante");
+                JOptionPane.showMessageDialog(null, "Por favor no dejes espacios vacíos. \nToda la información es importante");
             } catch (Exception e) {
                 if (band == 1)
-                    JOptionPane.showMessageDialog(null, "Formato de IP incorrecto. \nej. 189.220.191.252");
+                    JOptionPane.showMessageDialog(null, "El formato ingresado para la IP es incorrecto. \nej. 192.168.255.252");
                 if (band == 2)
                     JOptionPane.showMessageDialog(null, "Formato de puerto 1 incorrecto");
                 if (band == 3)
@@ -198,4 +210,5 @@ public class Start extends JFrame implements ActionListener, ItemListener, Start
         }
     }
 }
+
 
