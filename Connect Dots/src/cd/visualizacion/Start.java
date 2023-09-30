@@ -20,7 +20,7 @@ import javax.swing.JTextField;
  */
 public class Start extends JFrame implements ActionListener, ItemListener, StartView {
 
-    private JTextField nombreField, ipField, puertoEntradaField, puertoSalidaField;
+    private JTextField name, ipField, puertoEntradaField, puertoSalidaField;
     private JLabel etiquetaNombre, etiquetaIP, etiquetaPuertoEntrada, etiquetaPuertoSalida;
     private JComboBox<String> seleccionarModo;
     private JButton botonJugar;
@@ -49,9 +49,9 @@ public class Start extends JFrame implements ActionListener, ItemListener, Start
         add(etiquetaNombre);
 
         // Campo de texto para el nombre
-        nombreField = new JTextField();
-        nombreField.setBounds(150, 10, 130, 20);
-        add(nombreField);
+        name = new JTextField();
+        name.setBounds(150, 10, 130, 20);
+        add(name);
 
         // Etiqueta para la dirección IP
         etiquetaIP = new JLabel("IP:");
@@ -143,36 +143,38 @@ public class Start extends JFrame implements ActionListener, ItemListener, Start
         if (ae.getSource() == this.botonJugar) {
             int band = 0;
             try {
-                if (this.nombreField.getText().isEmpty())
+                if (this.name.getText().equalsIgnoreCase(""))
                     throw new ClassNotFoundException();
                 band = 1;
                 if (this.ipField.getText().equalsIgnoreCase("localhost")) {
 
                 } else {
-                    String[] partesIP = this.ipField.getText().split("\\.");
-                    if (this.ipField.getText().isEmpty() || partesIP.length != 4)
+                    String[] ipField = this.ipField.getText().split(".");
+                    if (this.ipField.getText().equalsIgnoreCase(""))
                         throw new ClassNotFoundException();
-                    for (String parte : partesIP) {
-                        int valor = Integer.parseInt(parte);
-                        if (valor < 0 || valor > 255)
-                            throw new Exception();
-                    }
+                    for (int x=0;x<3;x++) 
+                        for(int y=0;y<ipField[x].length();y++)
+                            if(Character.isDigit(ipField[x].charAt(y)))
+                                throw new Exception();
                 }
                 band = 2;
                 Integer.parseInt(this.puertoEntradaField.getText());
-                if (this.puertoEntradaField.getText().isEmpty())
+                if (this.puertoEntradaField.getText().equalsIgnoreCase(""))
                     throw new ClassNotFoundException();
                 band = 3;
                 Integer.parseInt(this.puertoSalidaField.getText());
-                if (this.puertoSalidaField.getText().isEmpty())
+                if (this.puertoSalidaField.getText().equalsIgnoreCase(""))
                     throw new ClassNotFoundException();
-                if (this.puertoSalidaField.getText().equals(this.puertoEntradaField.getText()))
+                if (this.puertoSalidaField.getText().equalsIgnoreCase(this.puertoEntradaField.getText()))
                     throw new ArithmeticException();
 
                 // Llama al método crear con los parámetros ingresados
-                crear(nombreField.getText(), ipField.getText(), Integer.parseInt(puertoEntradaField.getText()),
+               
+                crear(name.getText(), ipField.getText(),
+                        Integer.parseInt(puertoEntradaField.getText()),
                         Integer.parseInt(puertoSalidaField.getText()), modoPartida);
-            } catch (ArithmeticException e) {
+            }
+            catch (ArithmeticException e) {
                 JOptionPane.showMessageDialog(null, "No puede ser el mismo puerto para ambos jugadores. \nPor favor cambia uno de los dos");
             } catch (ClassNotFoundException e) {
                 JOptionPane.showMessageDialog(null, "Por favor no dejes espacios vacíos. \nToda la información es importante");
@@ -188,22 +190,21 @@ public class Start extends JFrame implements ActionListener, ItemListener, Start
     }
 
     @Override
-    public void crear(String nombreField, String ipField, int puertoEntrada, int puertoSalida, String modoPartida) {
-        // Crea una instancia de la clase View y oculta la ventana actual
-        View view = new View(nombreField, ipField, puertoEntrada, puertoSalida, modoPartida);
+    public void crear(String nombreFiled, String ipField, int puertoEntradaField, int puertoSalidaField, String modoPartida){
+        View vista=new View(nombreFiled, ipField, puertoEntradaField, puertoSalidaField, modoPartida);
         setVisible(false);
     }
 
     @Override
     public void itemStateChanged(ItemEvent ie) {
         // Maneja el evento de selección en el ComboBox
-        Object[] seleccion = ie.getItemSelectable().getSelectedObjects();
-        if (seleccion[0].toString().equalsIgnoreCase("Crear partida")) {
+        Object[] obj = ie.getItemSelectable().getSelectedObjects();
+        if (obj[0].toString().equalsIgnoreCase("Crear partida")) {
             modoPartida = "CrearPartida";
             puertoEntradaField.setText("9000");
             puertoSalidaField.setText("9001");
         }
-        if (seleccion[0].toString().equalsIgnoreCase("Unirse a una partida")) {
+        if (obj[0].toString().equalsIgnoreCase("Unirse a una partida")) {
             modoPartida = "UnirsePartida";
             puertoEntradaField.setText("9001");
             puertoSalidaField.setText("9000");

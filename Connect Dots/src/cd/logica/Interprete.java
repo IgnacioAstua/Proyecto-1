@@ -33,10 +33,10 @@ public class Interprete {
             String mensaje = obj.toString();
             String[] mensajes = mensaje.split("-");
 
-            if (mensajes[0].equalsIgnoreCase("**")) {
+            if (mensajes[0].equalsIgnoreCase("##")) 
                 // Si el mensaje tiene formato "**-MENSAJE", se considera un mensaje de chat.
                 conexion.actualizar(mensajes[1]);
-            } else {
+            else {
                 if (mensaje.equalsIgnoreCase(victoria)) {
                     // Si el mensaje indica victoria, se notifica a la conexión.
                     conexion.ganar(mensaje);
@@ -59,8 +59,8 @@ public class Interprete {
                     String[] coord = mensaje.split(" ");
                     int x = Integer.parseInt(coord[0]);
                     int y = Integer.parseInt(coord[1]);
-                    String nombre2 = coord[2];
-                    conexion.reAcomodar(x, y, nombre2);
+                    String nombreField2 = coord[2];
+                    conexion.reAcomodar(x, y, nombreField2);
                 }
             }
         }

@@ -16,8 +16,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import cd.logica.Boton;
 import cd.logica.MaquinaEstados;
-//import java.util.ArrayList;
-//import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Esta clase representa la vista principal del juego "Connect Dots".
